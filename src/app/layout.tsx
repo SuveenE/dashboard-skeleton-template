@@ -37,13 +37,8 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         > 
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          <div className="flex flex-col">
+          
+          <div className="flex flex-row overflow-y-none">
               <SideBar />
               <div>{children}</div>
           </div>

@@ -1,3 +1,13 @@
+## The stack includes:
+
+- [Next.js](https://nextjs.org/) for frontend
+- [TailwindCSS](https://tailwindcss.com/) for styling
+- [ShadcnUI](https://shadcn.com/) as the component library
+- [Lucide](https://lucide.dev/) for icons
+- [Clerk](https://clerk.com/) for authentication
+- [Supabase](https://supabase.com/) for databases
+
+
 <!-- This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

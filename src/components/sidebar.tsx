@@ -1,5 +1,12 @@
 import React from 'react';
 import { LayoutDashboard, FolderOpen, BarChart2, Settings, User } from 'lucide-react';
+import {
+    ClerkProvider,
+    SignInButton,
+    SignedIn,
+    SignedOut,
+    UserButton
+  } from '@clerk/nextjs'
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -10,9 +17,9 @@ const navItems = [
 
 const SideBar = () => {
   return (
-    <div className="h-screen w-72 bg-red text-gray-100 flex flex-col shadow-lg">
+    <div className="h-screen w-56 bg-red flex flex-col shadow-lg">
       <div className="p-6 mb-8">
-        <h1 className="text-2xl font-bold tracking-wider">Company Name</h1>
+        <h1 className="text-2xl font-bold tracking-wider">X Company</h1>
       </div>
 
       <div className="flex-grow">
@@ -36,8 +43,13 @@ const SideBar = () => {
           href="/profile" 
           className="flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 hover:bg-gray-700 group"
         >
-          <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">
-            <User size={24} className="text-gray-300 group-hover:text-white" />
+          <div className="w-10 h-10  flex items-center justify-center">
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
           </div>
           <div>
             <p className="font-medium group-hover:text-white">MyAccount</p>
