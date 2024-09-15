@@ -1,49 +1,82 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+"use client";
+
 import "./globals.css";
+import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
+import { usePathname } from "next/navigation";
+import { cn } from "../lib/utils";
+import Navbar from "../components/navbar";
 import SideBar from "../components/sidebar";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Dashboard Skeleton Template",
-  description: "Get started in a second!",
+const metadata = {
+  title: "FoloUp",
+  description: " AI-powered Interviews",
+  openGraph: {
+    title: "FoloUp",
+    description: "AI-powered Interviews",
+    siteName: "FoloUp",
+    images: [
+      {
+        url: "/Foloup.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const pathname = usePathname();
+
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        > 
-          
-          <div className="flex flex-row overflow-y-none">
-              <SideBar />
-              <div>{children}</div>
-          </div>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <link rel="icon" href="/browser-client-icon.ico" />
+      </head>
+      <body
+        className={cn(
+          inter.className,
+          "antialiased overflow-hidden min-h-screen"
+        )}
+      >
+        <ClerkProvider
+          signInFallbackRedirectUrl={"/dashboard"}
+          afterSignOutUrl={"/sign-in"}
+        >
+            {!pathname.includes("/sign-in") &&
+              !pathname.includes("/sign-up") && <Navbar />}
+            <div className="flex flex-row h-screen">
+              {!pathname.includes("/sign-in") &&
+                !pathname.includes("/sign-up") && <SideBar />}
+              <div className="ml-[200px] pt-[64px] h-full overflow-y-auto flex-grow">
+                {children}
+              </div>
+            </div>
+            <Toaster
+              toastOptions={{
+                classNames: {
+                  toast: "bg-white",
+                  title: "text-black",
+                  description: "text-red-400",
+                  actionButton: "bg-indigo-400",
+                  cancelButton: "bg-orange-400",
+                  closeButton: "bg-white-400",
+                },
+              }}
+            />
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

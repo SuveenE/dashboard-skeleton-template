@@ -1,60 +1,69 @@
-import React from 'react';
-import { LayoutDashboard, FolderOpen, BarChart2, Settings, User } from 'lucide-react';
-import {
-    ClerkProvider,
-    SignInButton,
-    SignedIn,
-    SignedOut,
-    UserButton
-  } from '@clerk/nextjs'
+"use client";
 
-const navItems = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/projects', icon: FolderOpen, label: 'My Projects' },
-  { href: '/analytics', icon: BarChart2, label: 'Analytics' },
-  { href: '/settings', icon: Settings, label: 'Settings' },
-];
+import React from "react";
+import {
+  HomeIcon,
+  HelpCircleIcon,
+  ChartNoAxesCombinedIcon,
+  SettingsIcon,
+  ScrollTextIcon,
+  LucideIcon,
+} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+
+interface SidebarItemProps {
+  icon: LucideIcon;
+  label: string;
+  path: string;
+  currentPath: string;
+}
+
+const SidebarItem: React.FC<SidebarItemProps> = ({
+  icon: Icon,
+  label,
+  path,
+  currentPath,
+}) => {
+  const router = useRouter();
+  const isActive = currentPath.endsWith(path);
+
+  return (
+    <div
+      className={`flex flex-row p-3 py-[5px] gap-3 rounded-md hover:bg-slate-200 cursor-pointer items-center ${
+        isActive ? "bg-indigo-200" : "bg-gray-50"
+      }`}
+      onClick={() => router.push(path)}
+    >
+      <Icon className="font-thin" width={18} height={18}/>
+      <p className="font-medium">{label}</p>
+    </div>
+  );
+};
 
 const SideBar = () => {
-  return (
-    <div className="h-screen w-56 bg-red flex flex-col shadow-lg">
-      <div className="p-6 mb-8">
-        <h1 className="text-2xl font-bold tracking-wider">X Company</h1>
-      </div>
+  const pathname = usePathname();
 
-      <div className="flex-grow">
-        <div className="space-y-1 px-4">
-          {navItems.map(({ href, icon: Icon, label }) => (
-            <div key={href}>
-              <a 
-                href={href} 
-                className="flex items-center space-x-3 px-4 py-3 gap-3 rounded-lg transition-colors duration-200 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <Icon size={20} className="text-gray-400 group-hover:text-white" />
-                <span className="font-medium">{label}</span>
-              </a>
-            </div>
+  const sidebarItems = [
+    { icon: HomeIcon, label: "Home", path: "/home" },
+    { icon: ChartNoAxesCombinedIcon, label: "Analytics", path: "/analytics" },
+    { icon: ScrollTextIcon, label: "Subscription", path: "/subscription" },
+    { icon: SettingsIcon, label: "Settings", path: "/settings" },
+    { icon: HelpCircleIcon, label: "Help", path: "/help" },
+  ];
+  return (
+    <div className="z-[10] bg-gray-50 p-6 w-[200px] fixed top-[64px] left-0 h-full">
+      <div className="flex flex-col gap-1">
+        <div className="flex flex-col justify-between gap-2 text-[15px]">
+        {sidebarItems.map((item) => (
+            <SidebarItem
+              key={item.path}
+              icon={item.icon}
+              label={item.label}
+              path={item.path}
+              currentPath={pathname}
+            />
           ))}
         </div>
-      </div>
-
-      <div className="p-4 mt-auto border-t border-gray-700">
-        <a 
-          href="/profile" 
-          className="flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 hover:bg-gray-700 group"
-        >
-          <div className="w-10 h-10  flex items-center justify-center">
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          </div>
-          <div>
-            <p className="font-medium group-hover:text-white">MyAccount</p>
-          </div>
-        </a>
       </div>
     </div>
   );
