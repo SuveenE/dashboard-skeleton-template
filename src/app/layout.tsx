@@ -12,15 +12,15 @@ import SideBar from "../components/sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 const metadata = {
-  title: "FoloUp",
-  description: " AI-powered Interviews",
+  title: "Your Website",
+  description: "Your website description",
   openGraph: {
-    title: "FoloUp",
-    description: "AI-powered Interviews",
-    siteName: "FoloUp",
+    title: "Your Website",
+    description: "Your website description",
+    siteName: "Your Website",
     images: [
       {
-        url: "/Foloup.png",
+        url: "/favicon.ico",
         width: 800,
         height: 600,
       },
