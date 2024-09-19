@@ -9,8 +9,7 @@ const Navbar = () => {
         <div className="flex flex-row gap-3 justify-center">
           <Link href={"/dashboard"} className="flex items-center gap-2">
             <p className="px-2 py-1 text-2xl font-bold text-black">
-              Folo<span className="text-indigo-600">Up</span>{" "}
-              <span className="text-[8px]">Beta</span>
+              Closed<span className="text-pink-600">AI</span>{" "}
             </p>
           </Link>
           <p className="my-auto text-xl">/</p>
